@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>User : {{authService.$loggedInUser?.name}} {{authService.$loggedInUser?.surname}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content style="text-align: center;">
+    <ion-card-title>My Reservations</ion-card-title>
+    <ng-container *ngFor="let reservation of reservations">
+        <ion-card>
+            <ion-list *ngIf="reservation.parked===false">
+                <ion-item style="text-align: center;">
+                    <ion-label>The time is now:
+                        <ion-badge color="primary">{{timer.hour}} : {{timer.minutes}} : {{timer.seconds}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+                <ion-item style="text-align: center;">
+                    <ion-label>Start time of reservation: <b>{{reservation.startTime}}</b></ion-label>
+                </ion-item>
+                <ion-item style="text-align: center;">
+                    <ion-label>End time of reservation: <b>{{reservation.endTime}}</b></ion-label>
+                </ion-item>
+                <ion-item style="text-align: center;">
+                    <ion-label>Remaining time:
+                        <b>{{sliceTime(reservation.endTime, reservation.key, reservation.parked)}} minutes</b>
+                    </ion-label>
+                </ion-item>
+
+                <app-timer [counter]="sliceTime(reservation.endTime,reservation.key,reservation.parked)"
+                           [reservationKey]="reservation.key"></app-timer>
+
+            </ion-list>
+            <ion-list *ngIf="reservation.parked===true">
+                <ion-item style="text-align: center;">
+                    <ion-label>The time is now:
+                        <ion-badge color="primary">{{timer.hour}} : {{timer.minutes}} : {{timer.seconds}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+                <ion-item style="text-align: center;">
+                    <ion-label>Start time of reservation: <b>{{reservation.startTime}}</b></ion-label>
+                </ion-item>
+                <ion-item style="text-align: center;">
+                    <ion-label>End time of reservation: <b>{{reservation.endTime}}</b></ion-label>
+                </ion-item>
+                <ion-item style="text-align: center;">
+                    <ion-label>
+                        <b>{{sliceTime(reservation.endTime, reservation.key, reservation.parked)}}</b>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+            <ng-container *ngIf="reservation.parked===false">
+                <ion-button shape="block" class="yellowButton" (click)="confirmParking(reservation.key)">Confirm Parking</ion-button>
+            </ng-container>
+            <ng-container *ngIf="reservation.parked===true">
+                <ion-button shape="block" color="danger" (click)="deleteParking(reservation.key)">Finish Parking</ion-button>
+            </ng-container>
+        </ion-card>
+
+    </ng-container>
+</ion-content>

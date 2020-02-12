@@ -1,0 +1,29 @@
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <img src="../../../../assets/icon/logo.png" alt="">
+
+        </ion-card-header>
+        <ion-card-content>
+            <form novalidate [formGroup]="loginForm">
+
+                <ion-item>
+                    <ion-label position="floating">Email</ion-label>
+                    <ion-input type="text" formControlName="email"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="floating">Password</ion-label>
+                    <ion-input type="password" formControlName="password"></ion-input>
+                </ion-item>
+
+            </form>
+            <div style="text-align: center">
+                <ion-button shape="block" class="yellowButton" [disabled]="!loginForm.valid" (click)="login()">Login</ion-button>
+                <ion-button shape="block" class="blackButton" routerLink="/register">Register</ion-button>
+            </div>
+        </ion-card-content>
+    </ion-card>
+
+
+</ion-content>

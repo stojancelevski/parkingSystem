@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="authService.$loggedInUser?.admin">
+      <ion-button routerLink="/create-parking">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/profile">
+        <ion-icon name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngFor="let parking of parkingPlaces">
+    <ion-card>
+      <ion-list>
+        <ion-card-title style="text-align: center">Parking Zone: {{parking.label}}</ion-card-title>
+        <ion-card-content>
+          <ion-item>
+            <ion-label><b>Street:</b> {{parking.street}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><b>Number:</b> {{parking.number}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><b>Postal Code:</b> {{parking.postalCode}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label><b>Reservations: </b>{{filterReservations(parking.key)}} / {{parking.maxPlaces}}</ion-label>
+          </ion-item>
+          <div style="text-align: center">
+            <ng-container *ngIf="checkReservation(parking.key)">
+              <ng-container *ngIf="filterReservations(parking.key) !== +parking.maxPlaces">
+                <ion-button [disabled]="checkIfParked()"
+                        shape="block" class="blackButton" (click)="makeReservation(parking.key)">Make Reservation
+                </ion-button>
+              </ng-container>
+
+              <ng-container *ngIf="filterReservations(parking.key) === +parking.maxPlaces">
+                <ion-button shape="block" color="success">Already Reserved</ion-button>
+              </ng-container>
+
+            </ng-container>
+            <ion-button shape="block" color="danger" *ngIf="!checkReservation(parking.key)"
+                        (click)="deleteReservation(parking.key)">Cancel Reservation</ion-button>
+            <ng-container *ngIf="authService.$loggedInUser?.admin">
+              <ion-button shape="block" color="danger"
+                          (click)="deleteParking(parking.key)">Delete Parking</ion-button>
+            </ng-container>
+
+          </div>
+        </ion-card-content>
+      </ion-list>
+    </ion-card>
+  </ng-container>
+
+
+</ion-content>

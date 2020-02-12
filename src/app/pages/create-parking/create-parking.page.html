@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Create Parking</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+        <ion-item>
+            <ion-label>Your Coordinates now</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Latitude: {{lat}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Longitude: {{lng}}</ion-label>
+        </ion-item>
+    </ion-list>
+    <form [formGroup]="createParkingForm">
+        <ion-card>
+            <ion-item>
+                <ion-label position="floating">Latitude</ion-label>
+                <ion-input type="number" placeholder="Enter Latitude of your Parking"
+                           formControlName="latitude"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Longitude</ion-label>
+                <ion-input type="number" placeholder="Enter Longitude of your Parking"
+                           formControlName="longitude"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Parking Zone</ion-label>
+                <ion-input type="text" placeholder="Enter the Zone of your Parking" formControlName="label"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Maximum Capacity</ion-label>
+                <ion-input type="text" placeholder="Enter the maximum Capacity" formControlName="maxPlaces"></ion-input>
+            </ion-item>
+        </ion-card>
+
+    </form>
+    <div style="text-align:center">
+        <ion-button shape="rounded" class="yellowButton" [disabled]="!createParkingForm.valid" (click)="createParking()">Create Parking</ion-button>
+    </div>
+</ion-content>

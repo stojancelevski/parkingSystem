@@ -24,3 +24,22 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.yellowButton {
+  --background: #ffba15;
+  color: black;
+}
+
+.blackButton {
+  --background: black;
+  color: #ffba15;
+}
+
+ion-header{
+  --background: #ffba15;
+}
+ion-toolbar{
+  --background: #ffba15;
+
+}

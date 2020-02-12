@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end" *ngIf="authService.$loggedInUser?.admin">
+            <ion-button routerLink="/create-parking">
+                <ion-icon name="create"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button routerLink="/profile">
+                <ion-icon name="person"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+           Map
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <agm-map
+            [latitude]="lat"
+            [longitude]="lng"
+            [zoom]="zoom"
+            [scrollwheel]="true"
+            [streetViewControl]="false"
+            [disableDefaultUI]="true"
+            [zoomControl]="false">
+
+        <agm-marker
+                *ngFor="let m of markers; let i = index"
+                [latitude]="m.latitude"
+                [longitude]="m.longitude"
+                [label]="m.label">
+
+            <agm-info-window style="width: 100%">
+                <ion-list>
+                    <ion-item>
+                        <ion-label style="text-align: justify">
+                            <strong>Street: {{m.street}}</strong><br>
+                            <strong>Number: {{m.number}}</strong><br>
+                            <strong>Postal Code: {{m.postalCode}}</strong><br>
+                            <strong>Reservations: {{filterReservations(m?.key)}} / {{m?.maxPlaces}}</strong>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </agm-info-window>
+
+        </agm-marker>
+        <agm-circle [latitude]="+lat" [longitude]="+lng"
+                    [radius]="1000"
+                    [fillColor]="'blue'"
+                    [circleDraggable]="false"
+                    [editable]="false">
+        </agm-circle>
+    </agm-map>
+
+
+</ion-content>
